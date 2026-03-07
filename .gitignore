@@ -9,6 +9,7 @@ __pycache__/
 .eggs/
 dist/
 build/
+src/update_data.py
 
 # uv
 .python-version
