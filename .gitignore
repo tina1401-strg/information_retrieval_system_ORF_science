@@ -1,0 +1,33 @@
+# Virtual environments
+.venv/
+notebooks/.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# uv
+.python-version
+uv.lock
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Data (usually too large for git)
+data/raw/
+data/processed/
+
+# Results/outputs (regeneratable)
+*.json
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
