@@ -5,5 +5,15 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "firecrawl>=4.18.0",
+    "asyncio>=4.0.0",
+    "beautifulsoup4>=4.14.3",
+    "httpx>=0.28.1",
+    "requests>=2.32.5",
+    "semaphore-bot>=0.17.0",
+    "trafilatura<2.0.0",
+]
+
+[dependency-groups]
+dev = [
+    "black>=26.3.0",
 ]
