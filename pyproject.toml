@@ -1,19 +1,30 @@
 [project]
 name = "ir-project"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.2.0"
+description = "Search Engine for ORF Science Articles"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11,<3.13"
 dependencies = [
     "asyncio>=4.0.0",
     "beautifulsoup4>=4.14.3",
     "httpx>=0.28.1",
-    "requests>=2.32.5",
-    "semaphore-bot>=0.17.0",
     "trafilatura<2.0.0",
+    "torch==2.5.1",              # ← was missing
+    "sentence-transformers==3.3.1",
+    "bm25s[full]>=0.2.14",
+    "jax[cuda12]>=0.5.3",
+    "charsplit",
+    "ollama>=0.6.1",
+    "numpy>=2.4.4",
+    "semaphore-bot>=0.17.0",    # signal bot only
+    "tokenizers>=0.22.2",
 ]
 
-[dependency-groups]
-dev = [
-    "black>=26.3.0",
-]
+[[tool.uv.index]]
+name = "pytorch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu121" }
+charsplit = { git = "https://github.com/dtuggener/CharSplit.git" }

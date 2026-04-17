@@ -1,6 +1,6 @@
 import asyncio
 import json
-from file_utilities import load_image, clear_images
+from fetcher import load_image, clear_images
 
 class SignalConnector:
     
@@ -25,7 +25,7 @@ class SignalConnector:
             return None
 
         data = json.loads(line)
-        print(f"RAW: {json.dumps(data, indent=2)}")
+        #print(f"RAW: {json.dumps(data, indent=2)}")
 
         if "method" in data and data["method"] == "receive":
             params = data.get('params', {})
@@ -61,7 +61,6 @@ class SignalConnector:
 
         for i, article in enumerate(articles):
             image_path = load_image(article["image_url"])
-            print(f"DEBUG image_path: {image_path}")
             send = {"jsonrpc": "2.0", "method": "send", "params": {
                 **recipient_params,
                 "message": article["url"],
@@ -74,7 +73,7 @@ class SignalConnector:
             self.writer.write(json.dumps(send).encode() + b'\n')
 
             await self.writer.drain()
-            asyncio.sleep(2)
+            await asyncio.sleep(2)
 
     async def send_text(self, message, recipient_data):
         if recipient_data.get("group_id"):
@@ -87,4 +86,4 @@ class SignalConnector:
         }, "id": 2}
         self.writer.write(json.dumps(send).encode() + b'\n')
         await self.writer.drain()
-        await asyncio.sleep(2)  # BUG FIX: missing await
+        await asyncio.sleep(2)
