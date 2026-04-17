@@ -1,0 +1,30 @@
+Analysiere die folgende Suchanfrage und gib zwei Dinge zurück:
+
+1. ANFRAGE: Kopiere die Suchanfrage und mache NUR folgende zwei Änderungen:
+   a) Entferne ALLE Zeitangaben vollständig aus der Suchanfrage (z.B. "seit 2025", "letzte Woche", "im März 2024", "gestern", "ab 2024", "bis Ende 2024", "zwischen 2022 und 2024", "der letzten Woche", usw.)
+   Verändere sonst NICHTS an der Suchanfrage.
+   b) Ergänze die Suchanfrage mit der ausgeschriebenen Version für alle echten Abkürzungen (bei internationalen Abkürzungen auf Englisch). Lasse die Abkürzung in der Suchanfrage.
+
+Eine Abkürzung erkennst du an folgenden Merkmalen:
+- Besteht vollständig aus Großbuchstaben
+- Besteht aus Großbuchstaben mit Kleinbuchstaben gemischt aber KEIN normales deutsches Wort
+- Ist ein Akronym aus Anfangsbuchstaben
+- Enthält Ziffern gemischt mit Buchstaben
+
+2. DATUM: Heute ist {today}. Extrahiere den Zeitraum aus der Suchanfrage als Datumsfilter im Format [YYYY-MM-DD:YYYY-MM-DD] oder [YYYY-MM-DD:*] oder [*:YYYY-MM-DD] oder null wenn kein Zeitbezug vorhanden. Entferne ALLE Zeitangaben vollständig aus der Suchanfrage (z.B. "seit 2025", "letzte Woche", "im März 2024", "gestern", "ab 2024", "bis Ende 2024", "zwischen 2022 und 2024", "der letzten Woche", usw.)
+
+Beispiele für DATUM:
+- "seit 2025" → [2025-01-01:*]
+- "der letzten Woche" → [2026-03-30:*]
+- "im März 2024" → [2024-03-01:2024-03-31]
+- "vor 2023" → [*:2022-12-31]
+- "gestern" → [2026-04-04:*]
+- "von diesem Jahr" → [2026-01-01:*]
+- "am 8. April 26" → [2026-04-08:2026-04-08]
+- kein Zeitbezug → null
+
+Suchanfrage: {query}
+
+Antworte NUR in diesem Format. Gib keine Erklärungen:
+ANFRAGE: <erweiterte Suchanfrage>
+DATUM: <datumsfilter oder null>
