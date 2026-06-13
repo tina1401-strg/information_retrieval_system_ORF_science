@@ -354,7 +354,7 @@ class RetrievalSystem:
     def _fuse_scores(
         sparse_scores: np.ndarray,
         dense_scores:  np.ndarray,
-        sparse_norm:   int   = 40,
+        sparse_norm:   int   = 28,
         sparse_curve:  int = 3,
     ) -> np.ndarray:
         fused_scores = dense_scores + (sparse_scores / sparse_norm) ** sparse_curve
