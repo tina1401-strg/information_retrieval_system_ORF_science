@@ -1,16 +1,3 @@
-"""
-models.py
----------
-All HuggingFace model wrappers in one place.
-Each class is self-contained — loads lazily, owns its model.
-
-Classes:
-    LLM             — Qwen2.5-7B-Instruct (causal LM)
-    Embedder        — multilingual-e5-large (sentence transformer)
-    EntityExtractor — GLiNER (NER)
-    KGExtractor     — mREBEL (seq2seq, used only during KG updates)
-"""
-
 import gc
 import torch
 import numpy as np

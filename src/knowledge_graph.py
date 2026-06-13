@@ -1,14 +1,5 @@
-"""
-knowledge_graph.py
-------------------
-Wraps the NetworkX KG with load, save, incremental update and query.
-"""
-
-import pickle
 import re
 import networkx as nx
-from pathlib import Path
-from tqdm import tqdm
 from collections import defaultdict
 from config import KG_PATH, load_pickle, save_pickle
 from db_handler import DBHandler

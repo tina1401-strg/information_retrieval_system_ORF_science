@@ -1,8 +1,6 @@
 import re
 from dataclasses import dataclass, field
 from datetime import date
-from pathlib import Path
-
 from config import QUERY_PROMPT_PATH
 from models import LLM, EntityExtractor
 
