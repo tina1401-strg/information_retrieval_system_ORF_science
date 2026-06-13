@@ -9,7 +9,7 @@ dependencies = [
     "beautifulsoup4>=4.14.3",
     "httpx>=0.28.1",
     "trafilatura<2.0.0",
-    "torch==2.5.1",              # ← was missing
+    "torch==2.5.1",
     "sentence-transformers==3.3.1",
     "bm25s[full]>=0.2.14",
     "jax[cuda12]>=0.5.3",
@@ -18,6 +18,11 @@ dependencies = [
     "numpy>=2.4.4",
     "semaphore-bot>=0.17.0",    # signal bot only
     "tokenizers>=0.22.2",
+    "ranx>=0.3.21",
+    "smolagents>=1.26.0",
+    "accelerate>=1.13.0",
+    "gliner>=0.2.0",
+    "nltk>=3.9.4",
 ]
 
 [[tool.uv.index]]

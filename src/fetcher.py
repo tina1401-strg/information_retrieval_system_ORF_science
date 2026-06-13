@@ -37,12 +37,12 @@ class Fetcher:
         """Fetch multiple stories concurrently. Returns list of valid article dicts."""
         sem = asyncio.Semaphore(CONCURRENCY)
         async with httpx.AsyncClient() as client:
-            tasks = [self._fetch_story(client, sem, sid) for sid in story_ids]
+            tasks = [self.fetch_story(client, sem, sid) for sid in story_ids]
             results = await asyncio.gather(*tasks)
         return [r for r in results if r is not None]
 
-    async def _fetch_story(self, client: httpx.AsyncClient, sem: asyncio.Semaphore, story_id: int) -> dict | None:
-        """Fetch and parse a single story. Internal use only."""
+    async def fetch_story(self, client: httpx.AsyncClient, sem: asyncio.Semaphore, story_id: int) -> dict | None:
+        """Fetch and parse a single story. Internal use only - NOT TRUE, CHANGE."""
         url = BASE_URL.format(story_id)
         async with sem:
             try:

@@ -23,19 +23,31 @@ class SignalConnector:
         line = await self.reader.readline()
         if not line:
             return None
-
         data = json.loads(line)
-        #print(f"RAW: {json.dumps(data, indent=2)}")
-
+        print(f"RAW: {json.dumps(data, indent=2)}")
+        
         if "method" in data and data["method"] == "receive":
             params = data.get('params', {})
+            
+            # skip exception envelopes (e.g. getServerGuid null)
+            if "exception" in params:
+                return None
+            
             envelope = params.get('envelope', params)
-            source = envelope.get('source', envelope.get('sourceNumber', ''))
+            
+            # skip envelopes with no source (control/sync from server)
+            if not envelope.get('sourceUuid') and not envelope.get('sourceNumber'):
+                return None
+            
+            #source = envelope.get('source', envelope.get('sourceNumber', ''))
+            source = (envelope.get('sourceUuid') or 
+                envelope.get('sourceNumber') or 
+                envelope.get('source') or '')
             msg_data = envelope.get('dataMessage', {})
             text = msg_data.get('message', '')
             group_info = msg_data.get('groupInfo', {})
             group_id = group_info.get('groupId', None)
-
+            
             if not text:
                 sync = envelope.get('syncMessage', {})
                 sent = sync.get('sentMessage', {})
@@ -43,14 +55,12 @@ class SignalConnector:
                 if not group_id:
                     sync_group = sent.get('groupInfo', {})
                     group_id = sync_group.get('groupId', None)
-
+            
             return {
                 "source": source,
                 "text": text,
                 "group_id": group_id,
-                #"raw": data
             }
-
         return None
 
     async def send_article(self, articles, recipient_data):

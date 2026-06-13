@@ -1,0 +1,32 @@
+Analysiere die folgende Suchanfrage und gib drei Dinge zurück:
+
+1. TYP: Entscheide ob die Anfrage eine Artikelsuche (RETRIEVE) oder eine spezifische Wissensfrage (QA) ist.
+   - RETRIEVE: Themensuche oder Personensuche, z.B. "Klimawandel", "Schwarze Löcher", "ESA Missionen", "Albert Einstein"
+   - QA: Spezifische Frage, z.B. "Wer hat X entdeckt?", "Was ist Y?", "Wie funktioniert Z?"
+
+2. ANFRAGE: Kopiere die Suchanfrage und mache NUR folgende zwei Änderungen:
+   a) Entferne ALLE Zeitangaben vollständig aus der Suchanfrage (z.B. "seit 2025", "letzte Woche", "im März 2024", "gestern", "ab 2024", "bis Ende 2024", "zwischen 2022 und 2024", "der letzten Woche", usw.)
+   Verändere sonst NICHTS an der Suchanfrage.
+   b) Ergänze die Suchanfrage mit der ausgeschriebenen Version für alle echten Abkürzungen (bei englischen Abkürzungen auf Englisch, ansonsten immer auf Deutsch). Lasse die Abkürzung in der Suchanfrage.
+
+3. DATUM: Heute ist {today}. Extrahiere den Zeitraum aus der Suchanfrage als Datumsfilter im Format [YYYY-MM-DD:YYYY-MM-DD] oder [YYYY-MM-DD:*] oder [*:YYYY-MM-DD] oder null wenn kein Zeitbezug vorhanden.
+   Beispiele für DATUM:
+   - "seit 2025" → [2025-01-01:*]
+   - "der letzten Woche" → [2026-03-30:*]
+   - "vor 2023" → [*:2022-12-31]
+   - "am 8. April 26" → [2026-04-08:2026-04-08]
+   - "aus 2022" → [2022-01-01:2022-12-31]
+   - kein Zeitbezug → null
+
+Ganzes Beispiel:
+INPUT: "Artikel über Hundeverhalten dieses Jahres"
+OUTPUT:
+   TYP: RETRIEVE
+   ANFRAGE: "Artikel über Hundeverhalten"
+   DATUM: [2026-01-01:*]
+
+Suchanfrage: {query}
+Antworte NUR in diesem Format. Gib keine Erklärungen:
+TYP: <RETRIEVE oder QA>
+ANFRAGE: <erweiterte Suchanfrage>
+DATUM: <Datumsfilter oder null>

@@ -24,7 +24,7 @@ class DBHandler:
         new_ids = [i for i in new_ids if i not in existing_ids]
         print(f"Fetching {len(new_ids)} new articles...")
         new_articles = await af.fetch_stories(new_ids)
-        inserted = self._insert_articles(new_articles)
+        inserted = self.insert_articles(new_articles)
         self._mark_updated()
         self.updated_ids = [a["id"] for a in new_articles]
         print(f"Inserted {inserted} new articles.")
@@ -49,39 +49,37 @@ class DBHandler:
         ).fetchone()
         return dict(row) if row else None
 
-    def get_articles_by_date(self, date_filter: str | None) -> list[dict]:
-        if date_filter is None:
+    def get_articles_by_ids(self, article_ids: list[int]) -> list[dict]:
+        return [
+            article
+            for article_id in article_ids
+            if (article := self.get_article_by_id(article_id)) is not None
+        ]
+
+    def get_articles_by_date(self, date_from: str | None, date_to: str | None) -> list[dict]:
+        if date_from is None and date_to is None:
             return self.get_all_articles()
 
-        inner = date_filter.strip("[]")
-        start_str, end_str = inner.split(":")
-
-        if start_str != "*" and end_str != "*":
+        if date_from is not None and date_to is not None:
             rows = self.conn.execute("""
                 SELECT * FROM articles
                 WHERE date >= ? AND date <= ?
                 ORDER BY date DESC
-            """, (start_str, end_str)).fetchall()
+            """, (date_from, date_to)).fetchall()
 
-        elif start_str != "*":
+        elif date_from is not None:
             rows = self.conn.execute("""
                 SELECT * FROM articles
                 WHERE date >= ?
                 ORDER BY date DESC
-            """, (start_str,)).fetchall()
+            """, (date_from,)).fetchall()
 
-        elif end_str != "*":
+        else:  # date_to is not None
             rows = self.conn.execute("""
                 SELECT * FROM articles
                 WHERE date <= ?
                 ORDER BY date DESC
-            """, (end_str,)).fetchall()
-
-        else:
-            rows = self.conn.execute("""
-                SELECT * FROM articles
-                ORDER BY date DESC
-            """).fetchall()
+            """, (date_to,)).fetchall()
 
         return [dict(row) for row in rows]
 
@@ -118,7 +116,7 @@ class DBHandler:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(str(time.time()))
 
-    def _insert_articles(self, articles: list) -> int:
+    def insert_articles(self, articles: list) -> int:
         """Insert a list of article dicts, skipping duplicates. Returns count inserted."""
         inserted = 0
         for article in articles:
